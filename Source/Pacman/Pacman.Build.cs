@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class Pacman : ModuleRules
+public class PacMan : ModuleRules
 {
-	public Pacman(ReadOnlyTargetRules Target) : base(Target)
+	public PacMan(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
