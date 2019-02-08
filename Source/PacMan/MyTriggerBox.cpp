@@ -15,78 +15,70 @@ AMyTriggerBox::AMyTriggerBox()
 void AMyTriggerBox::BeginPlay()
 {
 	Super::BeginPlay();
-	direction = get_Direction();
 
 }
 // Called every frame
 void AMyTriggerBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	readyToBeUpdated = true;
-
 }
 
-FVector AMyTriggerBox::get_Direction()
-{
-	FVector new_direction;
+FVector AMyTriggerBox::Get_Direction(){
+
 	AActor * player = UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn();
+
 	offset_X = player->GetActorLocation().X - this->GetActorLocation().X;
 	offset_Y = player->GetActorLocation().Y - this->GetActorLocation().Y;
+
 	if (abs(offset_X) > abs(offset_Y)) {
 		if (offset_X >= 0 && gate_Right) {
-			//UE_LOG(LogTemp, Warning, TEXT("1 Right"));
-			return right();
+			return Right();
 		} else if (offset_X < 0 && gate_Left) {
-			//UE_LOG(LogTemp, Warning, TEXT("1 Left"));
-			return left();
+			return Left();
 		} else {
 			if (offset_Y >= 0 && gate_Down) {
-				//UE_LOG(LogTemp, Warning, TEXT("1 Down"));
-				return down();
+				return Down();
 			} else if (offset_Y < 0 && gate_Up) {
-				//UE_LOG(LogTemp, Warning, TEXT("1 Up"));
-				return up();
+				return Up();
 			}
 		}
 	} else {
 		if (offset_Y >= 0 && gate_Down) {
-			//UE_LOG(LogTemp, Warning, TEXT("2 Down"));
-			return down();
+			return Down();
 		} else if (offset_Y < 0 && gate_Up) {
-			//UE_LOG(LogTemp, Warning, TEXT("2 Up"));
-			return up();
+			return Up();
 		} else {
 			if (offset_X >= 0 && gate_Right) {
-				//UE_LOG(LogTemp, Warning, TEXT("2 Right"));
-				return right();
+				return Right();
 			} else if (offset_X < 0 && gate_Left) {
-				//UE_LOG(LogTemp, Warning, TEXT("2 Left"));
-				return left();
+				return Left();
 			}
 		}
 	}
-	return new_direction;
+	return FVector(0, 0, 0);
 }
 
-FVector AMyTriggerBox::up() {
+//Devuelve el vector arriba
+FVector AMyTriggerBox::Up() {
 	
 	return FVector(0, -1, 0);
 }
 
-
-FVector AMyTriggerBox::down() {
+//Devuelve el vector abajo
+FVector AMyTriggerBox::Down() {
 	
 	
 	return FVector(0, 1, 0);
 }
 
-FVector AMyTriggerBox::left() {
-	
-	return FVector(-1, 0, 0);
+//Devuelve el vector derecha
+FVector AMyTriggerBox::Right() {
+
+	return FVector(1, 0, 0);
 }
 
-
-FVector AMyTriggerBox::right() {
+//Devuelve el vector izquierda
+FVector AMyTriggerBox::Left() {
 	
-	return FVector(1, 0, 0);
+	return FVector(-1, 0, 0);
 }

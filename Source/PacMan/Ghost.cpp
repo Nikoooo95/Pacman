@@ -32,26 +32,45 @@ void AGhost::Tick(float DeltaTime)
 	AddActorWorldOffset(speed * DeltaTime, true);
 }
 
+//Establece la velocidad y direccion inicial
 void AGhost::Set_Starting_Speed() {
 	speed = starting_Speed;
 }
 
+//Cambio de direccion al llegar a un trigger
 void AGhost::Change_Speed_Event() {
 	speed = init_Speed * direction_Temp;
 }
 
+//Activa temporalmente el Power Up
+void AGhost::Power_Up() {
+	power_Up = true;
+	Change_Color();
+}
+
+//Invierte el efecto del Power Up
+void AGhost::Reverse_Power_Up() {
+	
+	power_Up = false;
+	Change_Color();
+}
+
+//Evento de colision con otro Collider
 void AGhost::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	AMyTriggerBox * trigger_Box = Cast<AMyTriggerBox>(OtherActor);
 	if (trigger_Box != nullptr) {
-		direction_Temp = trigger_Box->get_Direction();
+		//Si encuentra un trigger, pide un cambio de direccion
+		direction_Temp = trigger_Box->Get_Direction();
 		GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &AGhost::Change_Speed_Event, 1.0f, false, 1.0f);
 	}
 		
 	AMyPawn * main_Player = Cast<AMyPawn>(OtherActor);
 	if (main_Player != nullptr) {
 		if (!power_Up) {
+			//Si no hay Power Up, se come al Pawn
 			GetWorld()->GetFirstPlayerController()->ConsoleCommand("quit");
 		} else {
+			//Si hay Power Up, se reinicia su posicion y aumenta su puntuacion
 			this->SetActorLocation(init_Pos);
 			Set_Starting_Speed();
 			main_Player->score += 200;
@@ -60,17 +79,4 @@ void AGhost::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Othe
 
 }
 
-
-void AGhost::Power_Up() {
-	power_Up = true;
-	//Change_Color();
-	GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &AGhost::Reverse_Power_Up, 1.0f, false, 5.0f);
-}
-
-void AGhost::Reverse_Power_Up() {
-	power_Up = false;
-	//Change_Color();
-}
-
-
-//void AGhost::Change_Color_Implementation(){}
+void AGhost::Change_Color_Implementation(){}

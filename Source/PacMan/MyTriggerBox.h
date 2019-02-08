@@ -16,21 +16,24 @@ class PACMAN_API AMyTriggerBox : public ATriggerBox
 
 
 public:
-	int distance;
-	FVector direction;
-	bool readyToBeUpdated;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//Distancia del jugador a dicho trigger
 	float offset_X;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float offset_Y;
 
+	//Permite ir hacia arriba
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool gate_Up;
+
+	//Permite ir hacia abajo
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool gate_Down;
+
+	//Permite ir hacia derecha
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool gate_Right;
+
+	//Permite ir hacia izquierda
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool gate_Left;
 
@@ -46,11 +49,19 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	
-	FVector get_Direction();
+	//Devuelve la direccion a la que tiene que ir el fantasma
+	FVector Get_Direction();
 	
-	FVector up();
-	FVector down();
-	FVector right();
-	FVector left();
+	//Devuelve el vector arriba
+	FVector Up();
+
+	//Devuelve el vector abajo
+	FVector Down();
+
+	//Devuelve el vector derecha
+	FVector Right();
+
+	//Devuelve el vector izquierda
+	FVector Left();
 
 };

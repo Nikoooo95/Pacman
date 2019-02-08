@@ -26,6 +26,6 @@ void APoint::Tick(float DeltaTime)
 }
 
 
-int APoint::get_Value() {
+int APoint::Get_Value() {
 	return value;
 }

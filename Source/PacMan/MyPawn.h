@@ -15,34 +15,39 @@ class PACMAN_API AMyPawn : public APawn
 
 public:
 
-	enum direction {
+	//Direcciones posibles
+	enum DIRECTIONS {
 		UP, DOWN, LEFT, RIGHT, NONE
-	}direccion;
+	}direction_State;
 
-	enum state {
-		left_right, up_down, trigger
-	}stado;
-
-	bool holded;
-
+	//Puntuacion del jugador
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int score;
 
+	//Velocidad del direccion
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float speed;
 
+	//Direccion del Pawn
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float time_To_Change;
+		FVector direction;
+
+	//False: no se ha pulsado un boton. True: se ha pulsado un boton
+	bool button_Pressed;
+
+	//Collider del Pawn
 	class USphereComponent * collider;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FVector direction;
+	//False: no está en Trigger. True: está en Trigger
+	bool in_Trigger;
 
-	bool in_Path_Point;
-
+	//False: no está activa el Power Up. True: está activado el Power Up
 	bool power_Up;
 
+	//Handler del Timer para los delay
 	FTimerHandle UnusedHandle;
+
+public:
 	// Sets default values for this pawn's properties
 	AMyPawn();
 
@@ -57,24 +62,35 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//Envia al Pawn hacia arriba
 	void Up();
+
+	//Envia al Pawn hacia abajo
 	void Down();
+
+	//Envia al Pawn hacia derecha
 	void Right();
+
+	//Envia al Pawn hacia izquierda
 	void Left();
 
+	//Reinica los valores de control de direccion
 	void Reset_Direction();
 
+	//Selecciona la direccion a la que enviar al Pawn
 	void Send_Direction();
 
-	void reset_Path_Point();
+	//Pone a false la variable in_Trigger
+	void Reset_Trigger();
 
-	void reset_Mecanica();
+	//Pone a false la variable de Power_Up
+	void Reset_Power_Up();
 
-	bool check_Power_Up();
-
+	//Evento de entrada de Colision con el Pawn
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* newComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
+	//Evento de salida de Colision con el Pawn
 	UFUNCTION()
 		void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 

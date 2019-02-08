@@ -70,8 +70,8 @@ public:
 	void Reverse_Power_Up();
 
 	//Cambia el material del fantasma con el Power Up
-	/*UFUNCTION(BlueprintNativeEvent, Category = "Material")
-		void Change_Color();*/
+	UFUNCTION(BlueprintNativeEvent, Category = "Material")
+		void Change_Color();
 
 	//Evento de colision con otro Collider
 	UFUNCTION()
