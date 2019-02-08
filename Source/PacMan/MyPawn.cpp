@@ -123,9 +123,9 @@ void AMyPawn::Reset_Trigger() {
 //Pone a false la variable de Power_Up
 void AMyPawn::Reset_Power_Up() {
 	power_Up = false;
-	for (TActorIterator<AGhost> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
+	/*for (TActorIterator<AGhost> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
 		ActorItr->Reverse_Power_Up();
-	}
+	}*/
 }
 
 //Evento de entrada de Colision con el Pawn
@@ -152,9 +152,9 @@ void AMyPawn::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherAct
 			if (point->Get_Value() == 10) {
 				power_Up = true;
 				for (TActorIterator<AGhost> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
-					ActorItr->Power_Up();
+					ActorItr->Change_To_Power_Up();
 				}
-				GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &AMyPawn::Reset_Power_Up, 1.0f, false, 1.0f);
+				//GetWorld()->GetTimerManager().SetTimer(UnusedHandle, this, &AMyPawn::Reset_Power_Up, 1.0f, false, 2.0f);
 			}
 			point->Destroy();
 		}

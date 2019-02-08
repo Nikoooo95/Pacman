@@ -42,19 +42,6 @@ void AGhost::Change_Speed_Event() {
 	speed = init_Speed * direction_Temp;
 }
 
-//Activa temporalmente el Power Up
-void AGhost::Power_Up() {
-	power_Up = true;
-	Change_Color();
-}
-
-//Invierte el efecto del Power Up
-void AGhost::Reverse_Power_Up() {
-	
-	power_Up = false;
-	Change_Color();
-}
-
 //Evento de colision con otro Collider
 void AGhost::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	AMyTriggerBox * trigger_Box = Cast<AMyTriggerBox>(OtherActor);
@@ -74,9 +61,13 @@ void AGhost::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Othe
 			this->SetActorLocation(init_Pos);
 			Set_Starting_Speed();
 			main_Player->score += 200;
+			Change_To_Normal();
 		}
 	}
 
 }
 
-void AGhost::Change_Color_Implementation(){}
+//void AGhost::Change_Color_Implementation(){}
+void AGhost::Change_To_Normal_Implementation(){}
+
+void AGhost::Change_To_Power_Up_Implementation(){}

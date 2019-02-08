@@ -35,7 +35,8 @@ public:
 	FVector init_Pos;
 
 	//False: Power Up desactivado. True: Power Up activado.
-	bool power_Up;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool power_Up;
 
 	//Handler de tiempo para los delay
 	FTimerHandle UnusedHandle;
@@ -63,15 +64,15 @@ public:
 	//Cambio de direccion al llegar a un trigger
 	void Change_Speed_Event();
 
-	//Activa temporalmente el Power Up
-	void Power_Up();
-
-	//Invierte el efecto del Power Up
-	void Reverse_Power_Up();
+	//Cambia el material del fantasma con el Power Up
+	UFUNCTION(BlueprintNativeEvent, Category = "Material")
+		void Change_To_Power_Up();
 
 	//Cambia el material del fantasma con el Power Up
 	UFUNCTION(BlueprintNativeEvent, Category = "Material")
-		void Change_Color();
+		void Change_To_Normal();
+
+
 
 	//Evento de colision con otro Collider
 	UFUNCTION()
